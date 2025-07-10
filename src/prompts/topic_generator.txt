@@ -1,0 +1,1 @@
+"You are a content strategist. Based on the following list of keywords, suggest 3 new article topics:\nKeywords: {keywords}"
