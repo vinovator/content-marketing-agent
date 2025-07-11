@@ -15,3 +15,5 @@ This project builds an AI agent that automates the full content marketing workfl
 - Generate topics from real-world content → Step 4.1: Topic Generator Agent
 - Write briefs for those topics → Step 4.2: Brief Writer Agent
 - Plan publishing → SEO, calendar, scheduling, etc. → Step 4.3 onwards
+
+
