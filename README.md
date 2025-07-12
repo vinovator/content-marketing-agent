@@ -1,29 +1,4 @@
-Content Marketing Assistant AI Agent
-
-This project is an AI-powered agent that automates content marketing tasks like:
-- Collecting news & trend data from Reddit, Hacker News, YouTube, NewsAPI, RSS, Google
-- Analyzing text using NLP (NLTK, TF-IDF)
-- Visualizing trends
-- Generating content insights
-
-Technologies Used
-- Python, Pandas, NLTK, Scikit-learn, Matplotlib, SQLite
-
-This project builds an AI agent that automates the full content marketing workflow:
-- Collect trend and news data from multiple sources → Step 2
-- Analyze keywords, sentiment, gaps → Step 3
-- Generate topics from real-world content → Step 4.1: Topic Generator Agent
-- Write briefs for those topics → Step 4.2: Brief Writer Agent
-- Content drafting based on the brief. → Step 4.3 Content Drafting Agent
-- Content polishing to improve tone and consistency → Step 4.4 Content Polisher Agent
-- Data collection pipeline → Step 5
-- Trend Analysis and Sentiment scoring - Trend Frequency, Sentiment → Step 6
-- Feed enriched data in to AI Agent → Step 7
-- Finalise the UI → Step 8
-- Export, Save and notify → Step 9
-
-
-# 🧠 Content Marketing Assistant (CMA)
+# 🧠 Content Marketing Agent
 
 A smart, AI-powered content ideation and generation assistant built to help marketing teams discover trending topics, generate structured content briefs, and produce high-quality drafts — all driven by real-world platform signals.
 
@@ -53,6 +28,28 @@ Unlike generic AI writers, CMA:
 - Will evolve to integrate performance learning, internal linking, and SEO guidance
 
 ---
+
+## Technologies Used
+
+- Python, Pandas, NLTK, Scikit-learn, Matplotlib, SQLite
+
+## Workflow
+
+This project builds an AI agent that automates the full content marketing workflow:
+- Collect trend and news data from multiple sources → Step 2
+- Analyze keywords, sentiment, gaps → Step 3
+- Generate topics from real-world content → Step 4.1: Topic Generator Agent
+- Write briefs for those topics → Step 4.2: Brief Writer Agent
+- Content drafting based on the brief. → Step 4.3 Content Drafting Agent
+- Content polishing to improve tone and consistency → Step 4.4 Content Polisher Agent
+- Data collection pipeline → Step 5
+- Trend Analysis and Sentiment scoring - Trend Frequency, Sentiment → Step 6
+- Feed enriched data in to AI Agent → Step 7
+- Finalise the UI → Step 8
+- Export, Save and notify → Step 9
+
+
+
 
 ## 🧱 System Architecture
 
