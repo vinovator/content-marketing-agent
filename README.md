@@ -205,7 +205,6 @@ Connect on LinkedIn | GitHub |
 
 MIT License – free for personal and commercial use.
 
-```
 
 ---
 
