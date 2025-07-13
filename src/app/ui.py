@@ -25,6 +25,7 @@ st.set_page_config(
 )
 
 st.title("Content Marketing Agent")
+st.markdown("---")
 
 # Sidebar navigation
 st.sidebar.title("Workflow")
@@ -43,3 +44,5 @@ tabs = {
 
 selected_tab = st.sidebar.radio("🔎 Navigate Steps", list(tabs.keys()))
 tabs[selected_tab]()  # Call the appropriate tab render function
+
+st.markdown("---")
