@@ -76,6 +76,4 @@ def render_platforms_tab():
     else:
         st.warning("No themes found. Please go back to Step 1 and define themes.")
 
-    st.markdown("---")
-
         
