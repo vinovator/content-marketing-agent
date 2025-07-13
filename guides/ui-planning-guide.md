@@ -37,6 +37,16 @@ This document outlines the UI structure, flow, and integration logic for the Str
     - If not (e.g. Reddit): ask user to enter subreddit names
 - State:
   - Store config in `st.session_state.scraper_config`
+  
+| Platform    | User Input Required?                  |
+| ----------- | ------------------------------------- |
+| Google News | No (uses saved themes)                |
+| Reddit      | Yes (list of subreddits)              |
+| Hacker News | No (uses themes as tags/search terms) |
+| YouTube     | Yes (search queries or channels)      |
+| RSS Feeds   | Yes (URLs of feeds)                   |
+| Web Search  | No (uses themes as keywords)          |
+
 
 ---
 
