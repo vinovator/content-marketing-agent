@@ -31,14 +31,14 @@ st.sidebar.title("Workflow")
 
 # Sidebar navigation
 tabs = {
-    "1. Define Themes": render_themes_tab,
-    "2. Select Platforms": render_platforms_tab,
-    "3. Analyze Trends": render_analyze_tab,
-    "4. Generate Topics": render_topics_tab,
-    "5. Write Briefs": render_briefs_tab,
-    "6. Draft Content": render_draft_tab,
-    "7. Polish Content": render_polish_tab,
-    "8. Export": render_export_tab,
+    "Step 1 - **Define Themes**": render_themes_tab,
+    "Step 2 - **Select Platforms**": render_platforms_tab,
+    "Step 3 - **Analyze Trends**": render_analyze_tab,
+    "Step 4 - **Generate Topics**": render_topics_tab,
+    "Step 5 - **Write Briefs**": render_briefs_tab,
+    "Step 6 - **Draft Content**": render_draft_tab,
+    "Step 7 - **Polish Content**": render_polish_tab,
+    "Step 8 - **Export**": render_export_tab,
 }
 
 selected_tab = st.sidebar.radio("🔎 Navigate Steps", list(tabs.keys()))
