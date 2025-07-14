@@ -64,8 +64,11 @@ def render_analyze_tab():
             # Show preview table
             st.markdown("---")
             st.subheader("📄 Preview Analyzed Content")
-            cols_to_display = ["title", "source", "publishedAt", "sentiment_label", "top_keywords", "cluster"]
-            st.dataframe(df[cols_to_display].sort_values(by="publishedAt", ascending=False), use_container_width=True)
+            cols_to_display = ["title", "url", "source", "publishedAt", "sentiment_label", "top_keywords", "cluster"]
+            st.dataframe(df[cols_to_display].sort_values(by="publishedAt", ascending=False), 
+                         column_config={"url": st.column_config.LinkColumn()},
+                         use_container_width=True
+                         )
 
             # Visualizations
             st.markdown("---")
