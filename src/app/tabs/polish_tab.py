@@ -12,7 +12,6 @@ from agents.content_polisher import polish_draft
 
 def render_polish_tab():
     st.header("Step 7: Polish Content")
-
     st.info("Polish and optimize drafts for tone, clarity, and SEO using the Content Polisher agent.")
 
     selected_drafts = st.session_state.get("selected_drafts", [])
@@ -23,54 +22,79 @@ def render_polish_tab():
 
     st.subheader("📝 Selected Drafts to Polish")
 
-    # Polishing settings
-    tone = st.selectbox("🎯 Choose desired tone for polishing", ["Professional", "Conversational", "Formal", "Friendly"], index=0)
-    audience = st.text_input("👥 Target Audience", value="Business Decision Makers")
+    polished_outputs = []
+    polish_triggered = False
 
-    if st.button("✨ Polish Drafts"):
-        polished_outputs = []
+    for i, draft in enumerate(selected_drafts):
+        with st.expander(f"📄 {draft.get('title', f'Draft {i+1}')}"):
 
-        with st.spinner("Polishing drafts..."):
-            for draft_data in selected_drafts:
-                raw_draft = draft_data.get("draft", "")
-                polished = polish_draft(
-                    draft=raw_draft,
-                    tone=tone,
-                    audience=audience,
-                    model_name="gpt-4o-mini"
-                )
-                polished_outputs.append({
-                    "title": draft_data.get("title", "Untitled"),
-                    "original": raw_draft,
-                    "polished": polished
-                })
+            # Extract tone and audience from brief
+            brief_data = draft.get("brief", {})
+            default_tone = brief_data.get("tone", "Professional")
+            default_audience = brief_data.get("audience", "Business Decision Makers")
 
-            st.session_state.polished_drafts = polished_outputs
-            st.success(f"✅ Polished {len(polished_outputs)} draft(s).")
+            # 🆕 Show metadata used during generation
+            st.markdown(f"**🎯 Original Tone:** {default_tone}")
+            st.markdown(f"**👥 Original Audience:** {default_audience}")
 
-    # Show polished drafts if available
-    if "polished_drafts" in st.session_state:
-        st.markdown("---")
-        st.subheader("🔍 Polished Content Preview")
+            st.markdown("**📝 Original Draft:**")
+            st.markdown(draft.get("draft", ""))
 
-        final_selection = []
+            # Allow override for polishing
+            tone = st.selectbox(
+                "🎯 Choose New Tone (Optional)",
+                ["Professional", "Conversational", "Formal", "Friendly"],
+                index=["Professional", "Conversational", "Formal", "Friendly"].index(default_tone),
+                key=f"tone_{i}"
+            )
 
-        for i, draft in enumerate(st.session_state.polished_drafts):
-            with st.expander(f"📄 {draft['title']}"):
+            audience = st.text_input(
+                "👥 Target Audience for Polish",
+                value=default_audience,
+                key=f"audience_{i}"
+            )
+
+            if st.button("✨ Polish This Draft", key=f"polish_{i}"):
+                with st.spinner("Polishing..."):
+                    polished = polish_draft(
+                        draft=draft.get("draft", ""),
+                        tone=tone,
+                        audience=audience,
+                        model_name="gpt-4o-mini"
+                    )
+                    polished_outputs.append({
+                        "title": draft.get("title", f"Draft {i+1}"),
+                        "original": draft.get("draft", ""),
+                        "polished": polished
+                    })
+                    st.session_state[f"polished_{i}"] = polished
+                    st.success("✅ Draft polished!")
+
+
+    # Show polished drafts (either from current or session)
+    final_selection = []
+    st.markdown("---")
+    st.subheader("🔍 Polished Content Preview")
+
+    for i, draft in enumerate(selected_drafts):
+        polished = st.session_state.get(f"polished_{i}")
+        if polished:
+            with st.expander(f"📄 {draft['title']} (Polished)"):
                 st.markdown("**Original Draft:**")
-                st.code(draft["original"], language="markdown")
+                st.code(draft["draft"], language="markdown")
 
                 st.markdown("**✨ Polished Draft:**")
-                st.markdown(draft["polished"])
+                st.markdown(polished)
 
                 if st.checkbox("✅ Select this for export", key=f"select_polished_{i}"):
-                    final_selection.append(draft)
+                    final_selection.append({
+                        "title": draft.get("title"),
+                        "polished": polished
+                    })
 
-        # Save selected drafts for export
-        if final_selection:
-            st.session_state.final_export_ready = final_selection
-            st.success(f"{len(final_selection)} draft(s) marked for export.")
-        else:
-            st.info("No drafts selected for export yet.")
-
-
+    # Save final export list
+    if final_selection:
+        st.session_state.final_export_ready = final_selection
+        st.success(f"{len(final_selection)} draft(s) marked for export.")
+    else:
+        st.info("No drafts selected for export yet.")

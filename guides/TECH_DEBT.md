@@ -20,7 +20,7 @@ In the Analyze tab, we display trends and visualizations derived from collected 
 
 ---
 
-## 2. 🔁 Navigation: Add Previous & Next Buttons to Each UI Tab
+## 2. ~~🔁 Navigation: Add Previous & Next Buttons to Each UI Tab~~
 
 ### ❗ Problem:
 The current UI only supports sidebar-based navigation. This can disrupt user flow, especially on small screens or during demos where linear navigation is preferred.
@@ -41,7 +41,7 @@ The current UI only supports sidebar-based navigation. This can disrupt user flo
 
 ---
 
-## 3. 📝 Briefs Tab: Capitalize Brief Field Labels
+## 3. 📝 ~~Briefs Tab: Capitalize Brief Field Labels~~
 
 ### ❗ Problem:
 
@@ -85,3 +85,21 @@ If any platform scraper fails (e.g., an invalid subreddit or unreachable RSS fee
 * Ensure `all_df` is always returned with available data, even if some sources fail.
 
 ---
+
+## 5. Finalize the UX polish
+
+---
+
+## 6. Update the README.md
+
+---
+
+## 7. Clean up the tech-debt.md
+
+---
+
+## 8. Add .zip export of all drafts
+
+---
+
+## 9. Publish the app in Streamlit or Hugging Face domains
