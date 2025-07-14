@@ -33,12 +33,11 @@ def render_draft_tab():
                 st.markdown("**Outline:**")
                 for point in brief.get("outline", []):
                     st.markdown(f"- {point}")
-                col1, col2 = st.columns(2)
-                col1.markdown(f"**Tone:** {brief.get('tone', '-')}")
-                col2.markdown(f"**Audience:** {brief.get('audience', '-')}")
+                st.markdown(f"**Tone:** {brief.get('tone', '-')}")
+                st.markdown(f"**Audience:** {brief.get('audience', '-')}")
                 st.markdown(f"**Call to Action:** {brief.get('cta', '-')}")
             else:
-                st.warning("⚠️ Brief content is not in expected format.")
+                st.markdown(f"**Brief Summary:** {brief}")
 
 
     st.markdown("---")
@@ -75,7 +74,20 @@ def render_draft_tab():
         st.subheader("📝 Draft Articles")
         for i, draft in enumerate(drafts):
             with st.expander(f"📄 {draft['title']}"):
-                st.markdown(f"**Brief Summary:** {draft['brief']}")
+                
+                #st.markdown(f"**Brief Summary:** {draft['brief']}")
+                brief = brief_data.get("brief", {})
+
+                if isinstance(brief, dict):
+                    st.markdown("**Outline:**")
+                    for point in brief.get("outline", []):
+                        st.markdown(f"- {point}")
+                    st.markdown(f"**Tone:** {brief.get('tone', '-')}")
+                    st.markdown(f"**Audience:** {brief.get('audience', '-')}")
+                    st.markdown(f"**Call to Action:** {brief.get('cta', '-')}")
+                else:
+                    st.markdown(f"**Brief Summary:** {brief}")
+
                 st.markdown("**Draft Content:**")
                 st.markdown(draft["draft"])
                 if st.checkbox("✅ Select this draft for polishing", key=f"select_draft_{i}"):

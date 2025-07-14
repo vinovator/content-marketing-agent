@@ -41,8 +41,11 @@ def collect_data(themes: List[str], platform_selections: Dict, max_results: int 
             for subreddit in queries:
                 for theme in themes:
                     print(f"Fetching Reddit posts from r/{subreddit} on '{theme}'...")
-                    df = pd.DataFrame(fetch_reddit_posts(subreddit=subreddit, query=theme, max_results=max_results))
-                    dfs.append(df)
+                    try:
+                        df = pd.DataFrame(fetch_reddit_posts(subreddit=subreddit, query=theme, max_results=max_results))
+                        dfs.append(df)
+                    except Exception as e:
+                        print(f"Fetching Reddit posts from r/{subreddit} on '{theme}' skipped due to an error")
 
         elif platform == "Hacker News":
             print("Fetching HackerNews posts...")
