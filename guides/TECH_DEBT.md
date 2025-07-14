@@ -35,7 +35,6 @@ The current UI only supports sidebar-based navigation. This can disrupt user flo
   with col2:
       if st.button("Next ➡️"):
           st.session_state.active_tab = "Next Tab Name"
-````
 
 * Use a `st.session_state.active_tab` variable to manage stateful navigation.
 * Update `ui.py` to reactively switch tabs based on `active_tab` session value.
