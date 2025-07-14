@@ -4,7 +4,7 @@ import feedparser
 import pandas as pd
 from bs4 import BeautifulSoup
 
-def fetch_rss_articles(feed_urls, limit: int = 10) -> pd.DataFrame:
+def fetch_rss_articles(feed_urls, max_results: int = 10) -> pd.DataFrame:
     """
     Fetch articles from a list of RSS feed URLs.
 
@@ -22,7 +22,7 @@ def fetch_rss_articles(feed_urls, limit: int = 10) -> pd.DataFrame:
 
     articles = []
 
-    for entry in feed.entries[:limit]:
+    for entry in feed.entries[:max_results]:
 
         published_at = pd.to_datetime(entry.get("published", ""), errors="coerce", utc=True)        
         articles.append(

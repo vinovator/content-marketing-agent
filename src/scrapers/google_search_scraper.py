@@ -9,7 +9,7 @@ load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID")
 
-def fetch_google_search_results(query: str, num_results: int = 10):
+def fetch_google_search_results(query: str, max_results: int = 10):
     """
     Fetch top search results for a given query using Google CSE API.
 
@@ -27,7 +27,7 @@ def fetch_google_search_results(query: str, num_results: int = 10):
         "key": GOOGLE_API_KEY,
         "cx": GOOGLE_CSE_ID,
         "q": query,
-        "num": num_results
+        "num": max_results
     }
 
     results = []

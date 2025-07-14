@@ -19,7 +19,7 @@ reddit = praw.Reddit(
     user_agent=REDDIT_USER_AGENT
 )
 
-def fetch_reddit_posts(subreddit_name: str, query: str, limit: int = 10) -> List[Dict]:
+def fetch_reddit_posts(subreddit: str, query: str, max_results: int = 10) -> List[Dict]:
     """
     Fetch Reddit posts from a subreddit matching the given query.
 
@@ -31,10 +31,10 @@ def fetch_reddit_posts(subreddit_name: str, query: str, limit: int = 10) -> List
     Returns:
         List[Dict]: List of post metadata
     """
-    subreddit = reddit.subreddit(subreddit_name)
+    subreddit = reddit.subreddit(subreddit)
     posts = []
 
-    for submission in subreddit.search(query, limit=limit, sort="relevance"):
+    for submission in subreddit.search(query, limit=max_results, sort="relevance"):
         created_at = pd.to_datetime((submission.created_utc), unit="s", utc=True)
         posts.append({
             "title": submission.title,

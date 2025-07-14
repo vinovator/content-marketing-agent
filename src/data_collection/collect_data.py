@@ -3,6 +3,8 @@
 import os
 import sys
 import pandas as pd
+import sqlite3
+from typing import List, Dict
 
 # Ensure the scrapers folder is accessible
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -15,54 +17,90 @@ from scrapers.google_search_scraper import fetch_google_search_results
 from scrapers.youtube_scraper import fetch_youtube_videos
 from scrapers.news_scraper import fetch_news_articles
 
-def collect_all_data(
-    keyword: str,
-    subreddit: str = "marketing",
-    rss_feeds: list = [],
-    max_results: int = 10
-) -> pd.DataFrame:
+def collect_data(themes: List[str], platform_selections: Dict, max_results: int = 10) -> pd.DataFrame:
     """
-    Collect content from all sources and return a single combined DataFrame.
-
+    Collect data based on user-selected platforms and input values.
     Args:
-        keyword (str): Search keyword
-        subreddit (str): Subreddit to use for Reddit scraper
-        rss_feeds (list): List of RSS feed URLs
-        max_results (int): Number of results per source
-
+        themes (List[str]): List of themes selected by the user.
+        platform_selections (Dict): Platform-specific input info from session state.
+        max_results (int): Max number of results per scraper.
     Returns:
-        pd.DataFrame: Combined content DataFrame
+        pd.DataFrame: Combined cleaned DataFrame with columns: title, url, publishedAt, source
     """
 
-    # Collect data from all sources
-    print("Fetching Reddit posts...")
-    reddit_df = pd.DataFrame(fetch_reddit_posts(subreddit, keyword, max_results))
+    dfs = []
 
-    print("Fetching HackerNews posts...")
-    hn_df = pd.DataFrame(fetch_top_hackernews_posts(max_results))
+    for platform, config in platform_selections.items():
+        input_type = config["type"]
+        values = config["value"]
 
-    print("Fetching RSS articles...")
-    rss_df = pd.DataFrame(fetch_rss_articles(rss_feeds, max_results))
+        # Use themes if input_type is "theme"
+        queries = themes if input_type == "theme" else values
 
-    print("Fetching Google search results...")
-    google_df = pd.DataFrame(fetch_google_search_results(keyword, max_results))
+        if platform == "Reddit":
+            for subreddit in queries:
+                for theme in themes:
+                    print(f"Fetching Reddit posts from r/{subreddit} on '{theme}'...")
+                    df = pd.DataFrame(fetch_reddit_posts(subreddit=subreddit, query=theme, max_results=max_results))
+                    dfs.append(df)
 
-    print("Fetching YouTube videos...")
-    youtube_df = pd.DataFrame(fetch_youtube_videos(keyword, max_results))
+        elif platform == "Hacker News":
+            print("Fetching HackerNews posts...")
+            df = pd.DataFrame(fetch_top_hackernews_posts(max_results=max_results))
+            dfs.append(df)
 
-    print("Fetching NewsAPI articles...")
-    news_df = pd.DataFrame(fetch_news_articles(keyword, max_results))
+        elif platform == "Google News":
+            for theme in queries:
+                print(f"Fetching Google News for theme '{theme}'...")
+                df = pd.DataFrame(fetch_google_search_results(query=theme, max_results=max_results))
+                dfs.append(df)
 
-    # Combine all
-    all_df = pd.concat([reddit_df, hn_df, rss_df, google_df, youtube_df, news_df], ignore_index=True)
-    return all_df[["title", "url", "publishedAt", "source"]]
+        elif platform == "YouTube":
+            for query in queries:
+                print(f"Fetching YouTube results for '{query}'...")
+                df = pd.DataFrame(fetch_youtube_videos(query=query, max_results=max_results))
+                dfs.append(df)
 
+        elif platform == "RSS Feeds":
+            for rss_url in queries:
+                print(f"Fetching RSS articles from {rss_url}...")
+                df = pd.DataFrame(fetch_rss_articles([rss_url], max_results=max_results))
+                dfs.append(df)
 
-if __name__ == "__main__":
-    keyword = "AI in content marketing"
-    rss_urls = [
-        "https://moz.com/blog/rss",
-        "https://feeds.feedburner.com/TechCrunch/"
-    ]
-    df = collect_all_data(keyword, subreddit="marketing", rss_feeds=rss_urls, max_results=5)
-    print(df.head())
+        elif platform == "Web Search":
+            for theme in queries:
+                print(f"Fetching Web search results for '{theme}'...")
+                df = pd.DataFrame(fetch_news_articles(query=theme, max_results=max_results))
+                dfs.append(df)
+
+        else:
+            print(f"⚠️ Unknown platform: {platform}. Skipping.")
+
+    # Combine all and drop duplicates/nulls
+    if not dfs:
+        return pd.DataFrame(columns=["title", "url", "publishedAt", "source"])
+
+    all_df = pd.concat(dfs, ignore_index=True)
+    all_df = all_df.dropna(subset=["title", "url"]).drop_duplicates(subset=["title", "url"])
+    all_df = all_df[["title", "url", "publishedAt", "source"]]  # standard format
+
+    # Save to SQLite-compatible CSV for analysis
+    root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    os.makedirs(os.path.join(root, "data"), exist_ok=True)
+
+    # Save to SCV
+    output_path = os.path.join(root, "data", "combined_data.csv")
+    all_df.to_csv(output_path, index=False)
+
+    #Save to SQLite database
+    sqlite_path = os.path.join(root, "data", "content_data.db")
+    #Connect to (or create) SQLite database
+    conn = sqlite3.connect(sqlite_path)
+
+    # Export to table name "content"
+    all_df.to_sql("content", conn, if_exists="replace", index=False)
+
+    # Close the connection
+    conn.close()
+
+    return all_df

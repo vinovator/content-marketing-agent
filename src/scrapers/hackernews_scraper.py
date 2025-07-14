@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 
-def fetch_top_hackernews_posts(limit: int = 10):
+def fetch_top_hackernews_posts(max_results: int = 10):
     """
     Fetch top Hacker News posts using the public API.
 
@@ -16,7 +16,7 @@ def fetch_top_hackernews_posts(limit: int = 10):
     headers = {"User-Agent": "ContentMarketingAgent/0.1"}
     
     response = requests.get(f"{base}/topstories.json", headers=headers)
-    top_stories = response.json()[:limit]
+    top_stories = response.json()[:max_results]
 
     stories = []
 

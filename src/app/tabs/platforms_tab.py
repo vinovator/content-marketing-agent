@@ -5,75 +5,73 @@ import streamlit as st
 def render_platforms_tab():
     st.header("Step 2: Select Platforms to Scrape")
 
-    st.info("This section will let users choose platforms like Google, Reddit, YouTube, etc., and enter any required parameters per platform (e.g., subreddits for Reddit).")
+    st.info("Choose content platforms to scrape and provide any required parameters.")
 
     st.markdown("""
     Select platforms you want to collect content from. Some platforms may require additional input.
     """)
 
-    # 🔹 Display themes selected in Step 1
+    # 🔹 Get previously defined themes
     themes = st.session_state.get("themes", [])
-    if themes:
-        st.subheader("🎯 Selected Themes")
+
+    if not themes:
+        st.warning("⚠️ No themes found. Please go back to Step 1 and define themes first.")
+        return
+
+    st.subheader("🎯 Selected Themes")
+    st.write(", ".join(themes))
+
+    # Supported platforms and required input types
+    platforms_with_inputs = {
+        "Google News": {"type": "theme"},
+        "Reddit": {"type": "custom", "label": "Enter Subreddits (comma-separated)", "help": "e.g. ai, marketing, startups"},
+        "Hacker News": {"type": "theme"},
+        "YouTube": {"type": "custom", "label": "Enter YouTube search queries (comma-separated)", "help": ""},
+        "RSS Feeds": {"type": "custom", "label": "Enter RSS Feed URLs (one per line)", "help": ""},
+        "Web Search": {"type": "theme"},
+    }
+
+    # Platform selection
+    selected_platforms = st.multiselect(
+        "Select Platforms to Scrape",
+        options=list(platforms_with_inputs.keys()),
+    )
+
+    # Input collectors
+    platform_inputs = {}
+
+    for platform in selected_platforms:
+        config = platforms_with_inputs[platform]
+        if config["type"] == "custom":
+            st.markdown(f"**{platform} Input**")
+            if platform == "RSS Feeds":
+                value = st.text_area(config["label"], help=config.get("help", ""))
+                inputs = [line.strip() for line in value.splitlines() if line.strip()]
+            else:
+                value = st.text_area(config["label"], help=config.get("help", ""))
+                inputs = [item.strip() for item in value.split(",") if item.strip()]
+            platform_inputs[platform] = {"type": "custom", "value": inputs}
+        else:
+            # Use themes as default input
+            platform_inputs[platform] = {"type": "theme", "value": themes}
+
+    # Save state
+    if st.button("✅ Save Platform Selections"):
+        st.session_state.selected_platforms = selected_platforms
+        st.session_state.platform_selections = platform_inputs
+        st.success("Platform selections saved.")
+
+        # Summary display
+        st.markdown("---")
+        st.subheader("📋 Configuration Summary")
+
+        st.markdown("### 🎯 Themes")
         st.write(", ".join(themes))
 
-        # Platform checkboxes
-        platforms = {
-            "Google News": {},
-            "Reddit": {"subreddits": ""},
-            "Hacker News": {},
-            "YouTube": {"queries": ""},
-            "RSS Feeds": {"rss_urls": ""},
-            "Web Search": {}
-        }
+        st.markdown("### ✅ Platforms and Inputs")
+        for platform in selected_platforms:
+            input_type = platform_inputs[platform]["type"]
+            value = platform_inputs[platform]["value"]
+            st.markdown(f"**{platform}** — Input Type: `{input_type}`")
+            st.write(value)
 
-        selected = st.multiselect(
-            "Select Platforms to Scrape",
-            options=list(platforms.keys()),
-            default=[]
-        )
-
-        # Collect inputs for selected platforms
-        platform_inputs = {}
-
-        if "Reddit" in selected:
-            subreddits = st.text_area("Enter Subreddits (comma-separated)", help="e.g. ai, marketing, startups")
-            platform_inputs["Reddit"] = [s.strip() for s in subreddits.split(",") if s.strip()]
-
-        if "YouTube" in selected:
-            queries = st.text_area("Enter YouTube search terms or channels (comma-separated)")
-            platform_inputs["YouTube"] = [q.strip() for q in queries.split(",") if q.strip()]
-
-        if "RSS Feeds" in selected:
-            rss_urls = st.text_area("Enter RSS feed URLs (one per line)")
-            platform_inputs["RSS Feeds"] = [url.strip() for url in rss_urls.splitlines() if url.strip()]
-
-        # Save platform selection and inputs
-        if st.button("Save Platform Selections"):
-            st.session_state.selected_platforms = selected # List of selected platform names
-            st.session_state.platform_inputs = platform_inputs # Dict of inputs per selected platform
-            st.success("Platform selections saved.")
-
-            st.markdown("---")
-            st.subheader("Your Configuration Summary")
-
-            st.markdown("### 🎯 Themes")
-            st.write(", ".join(themes) if themes else "None")
-
-            st.markdown("### Selected Platforms")
-            for platform in selected:
-                st.markdown(f"**{platform}**")
-                inputs = platform_inputs.get(platform, None)
-                if inputs:
-                    st.write(inputs)
-                else:
-                    if themes:
-                        st.markdown("Using themes as input:")
-                        st.write(themes)
-                    else:
-                        st.write("_No input and no themes found_")
-
-    else:
-        st.warning("No themes found. Please go back to Step 1 and define themes.")
-
-        
