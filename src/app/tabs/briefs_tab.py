@@ -62,9 +62,12 @@ def render_briefs_tab():
 
                 brief = brief_data["brief"]
 
+                def format_key(keu):
+                    return " ".join([w.capitalize() for w in keu.split("_")])
+
                 if isinstance(brief, dict):
                     for key, value in brief.items():
-                        st.markdown(f"**{key}**")
+                        st.markdown(f"**{format_key(key)}**:")
                         if isinstance(value, list):
                             for item in value:
                                 st.markdown(f"- {item}")
@@ -76,7 +79,7 @@ def render_briefs_tab():
                         import json
                         parsed = json.loads(brief)
                         for key, value in parsed.items():
-                            st.markdown(f"**{key}**")
+                            st.markdown(f"**{format_key(key)}**:")
                             if isinstance(value, list):
                                 for item in value:
                                     st.markdown(f"- {item}")

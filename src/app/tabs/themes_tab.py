@@ -8,6 +8,7 @@ def render_themes_tab():
         Use this step to define the broad **themes** you want to explore in your content strategy.
         These themes will guide scraping, analysis, and topic generation in later steps.
     """)
+
     themes_input = st.text_area("Enter one or more marketing themes (comma separated)", height=100)
 
     if st.button("Save Themes"):

@@ -42,7 +42,42 @@ tabs = {
     "Step 8 - **Export**": render_export_tab,
 }
 
-selected_tab = st.sidebar.radio("🔎 Navigate Steps", list(tabs.keys()))
+# Define tab order
+tab_order = list(tabs.keys())
+
+# Initialize tab order and current tab in session state
+if "tab_order" not in st.session_state:
+    st.session_state.tab_order = tab_order
+
+if "current_tab" not in st.session_state:
+    st.session_state.current_tab = tab_order[0]
+
+# Sidebar tab selection
+selected_tab = st.sidebar.radio(
+    "🔎 Navigate Steps",
+    tab_order,
+    index=tab_order.index(st.session_state.current_tab),
+    )
+
+# Update session state with selection
+st.session_state.current_tab = selected_tab
+
+# === Render the tab content ===
 tabs[selected_tab]()  # Call the appropriate tab render function
 
+# === Navigation Buttons at the bottom ===
 st.markdown("---")
+col1, col2 = st.columns([1, 1])
+current_index = tab_order.index(selected_tab)
+
+with col1:
+    if current_index > 0:
+        if st.button("⬅️ Previous Step"):
+            st.session_state.current_tab = tab_order[current_index - 1]
+            st.rerun()
+
+with col2:
+    if current_index < len(tab_order) - 1:
+        if st.button("Next Step ➡️"):
+            st.session_state.current_tab = tab_order[current_index + 1]
+            st.rerun()
