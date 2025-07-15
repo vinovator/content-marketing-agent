@@ -1,0 +1,24 @@
+# OpenAI API Key
+OPENAI_API_KEY="your-openapi-key"
+
+# Google API (for trends, search)
+GOOGLE_API_KEY=your-google-api-key
+GOOGLE_CSE_ID=your-google-cse-id
+
+# YouTube API (same a Google API Key)
+YOUTUBE_API_KEY=your-youtube-api-key
+
+# News API Key
+NEWS_API_KEY= your-news-api-key
+
+# Twitter API (optional)
+TWITTER_API_KEY=your_twitter_api_key
+TWITTER_API_SECRET=your_twitter_api_secret
+
+# Database URL (optional)
+DATABASE_URL=sqlite:///content_marketing.db
+
+# Reddit PRAW API
+REDDIT_CLIENT_ID=your-reddit-client-id
+REDDIT_CLIENT_SECRET= your-reddit-client-secret
+REDDIT_USER_AGENT=ContentMarketingAgent/0.1 by <your-name>
