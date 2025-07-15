@@ -1,9 +1,29 @@
-pandas
-nltk
-scikit-learn
-matplotlib
-seaborn
-sqlite3
-feedparser
-beautifulsoup4
-requests
+# Core data & ML
+pandas>=1.5
+numpy>=1.23
+scikit-learn>=1.2
+nltk>=3.8
+sentence-transformers>=2.2.2
+wordcloud>=1.8
+matplotlib>=3.7
+seaborn>=0.12
+
+# Web scraping
+beautifulsoup4>=4.11
+requests>=2.28
+feedparser>=6.0
+
+# LangChain + OpenAI
+langchain>=0.1.0
+langchain-openai>=0.1.0
+python-dotenv>=1.0
+tiktoken>=0.5
+
+# Streamlit
+streamlit>=1.25
+
+# PDF Export
+fpdf2>=2.7
+
+# Optional - for cluster viz
+plotly>=5.14

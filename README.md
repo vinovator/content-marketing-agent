@@ -1,116 +1,168 @@
-# 🧠 Content Marketing Agent
+# 🚀 Content Marketing Agent
 
-An AI-powered platform that automates your **end-to-end content marketing workflow** – from trend collection to polished, export-ready articles using LLMs.
+**Automate your entire content marketing pipeline** — from market research to polished articles — in one unified app.
 
----
-
-## 🚀 Features
-
-- 🌐 Scrape content from Google, Reddit, YouTube, News, Hacker News, RSS
-- 🔍 Analyze trends, keywords, sentiment, and semantic clusters
-- 🧠 Generate article topics with LLMs
-- 📝 Write structured briefs and long-form articles
-- ✨ Polish content for tone, SEO, and clarity
-- 📤 Export to Word (`.docx`), Markdown (`.md`), or email format
+> **Features:**
+> ✅ Multi-platform data collection  
+> ✅ Trend & sentiment analysis  
+> ✅ AI-driven topic generation  
+> ✅ Brief & content drafting  
+> ✅ Content polishing  
+> ✅ Export to multiple formats  
+> ✅ Interactive Streamlit UI
 
 ---
 
-## 🧭 Master Workflow
+## 📚 Project Overview
 
-1. **Define Themes** – Provide one or more marketing themes (e.g. "AI Agents", "Green Hydrogen")
-2. **Select Platforms** – Choose one or more sources like Reddit, Google News, YouTube, etc.
-3. **Scrape + Analyze** – Collect real-time data and extract sentiment, keywords, clusters
-4. **Generate Topics** – Use LLMs to create clickable article ideas
-5. **Write Briefs** – Turn each topic into a structured article brief
-6. **Draft Content** – Generate long-form content
-7. **Polish** – Refine tone, clarity, and structure
-8. **Export** – Save articles in multiple formats
+The Content Marketing Agent scrapes trending content from various platforms, analyzes it for topics and sentiment, and uses AI agents to:
+
+- Propose new article topics
+- Write content briefs
+- Draft full articles
+- Polish final drafts
+- Export your work in Markdown, PDF, or text formats
+
+Designed for content marketers, strategists, and SEO professionals who want **data-driven ideas and rapid content production.**
 
 ---
 
-## 📂 Folder Structure
+## 🎯 Workflow
 
-```bash
+Below is the **step-by-step workflow** as implemented in the UI:
+
+### 1. Define Themes
+- User inputs **broad themes** for research.
+- E.g. `"AI Agents"`, `"Sustainable Marketing"`.
+
+### 2. Select Platforms
+- Pick from:
+  - Google News
+  - Reddit
+  - Hacker News
+  - YouTube
+  - RSS Feeds
+  - Web Search
+- Enter platform-specific inputs (e.g. subreddits).
+
+### 3. Collect & Analyze Trends
+- Scrape content across selected platforms.
+- Perform:
+  - Text cleaning
+  - TF-IDF vectorization
+  - Topic modeling
+  - Sentiment scoring
+  - Clustering
+- Visualize trends and keywords.
+
+### 4. Generate Topics
+- Generate 5 unique article topics:
+  - Title
+  - Short description
+- User can select topics for content creation.
+
+### 5. Write Briefs
+- Create detailed content briefs:
+  - Title
+  - Description
+  - Outline
+  - Tone
+  - Audience
+  - Call-to-Action (CTA)
+
+### 6. Draft Content
+- Generate full article drafts from briefs.
+
+### 7. Polish Content
+- Refine drafts for:
+  - Style and tone
+  - Grammar
+  - Readability
+
+### 8. Export
+- Download articles as:
+  - **Markdown (.md)**
+  - **PDF (.pdf)**
+  - **Plain text (.txt)**
+
+---
+
+## 🗄️ Project Structure
+
+```
+
 content-marketing-agent/
 │
-├── data/                             # Scraped + analyzed data storage
-│   ├── content_data.db               # SQLite database for structured content
-│   └── combined_data.csv             # Flattened snapshot of raw content
+├── data/
+│   ├── combined\_data.csv
+│   └── content\_data.db
 │
-├── guides/                           # Internal documentation
+├── guides/
 │   ├── content-marketing-agent-notes.md
 │   ├── google-api-setup-guide.md
-│   ├── TECH_DEBT.md
+│   ├── TECH\_DEBT.md
 │   └── ui-planning-guide.md
 │
-├── notebooks/                        # Development notebooks
-│   ├── 01_data_collection.ipynb
-│   ├── 02_content_analysis.ipynb
-│   ├── 03_ai_agent_core.ipynb
-│   └── 04_ui_planning.ipynb
-│
 ├── src/
-│   ├── agents/                       # LLM-powered automation
-│   │   ├── topic_generator.py
-│   │   ├── brief_writer.py
-│   │   ├── content_drafter.py
-│   │   └── content_polisher.py
-│   │
-│   ├── analyzers/                    # NLP logic and visualizations
-│   │   ├── trend_sentiment_analyzer.py
-│   │   └── trend_viz.py
-│   │
-│   ├── app/                          # Streamlit UI
+│   ├── app/
 │   │   ├── ui.py
 │   │   └── tabs/
-│   │       ├── themes_tab.py
-│   │       ├── platforms_tab.py
-│   │       ├── analyze_tab.py
-│   │       ├── topics_tab.py
-│   │       ├── briefs_tab.py
-│   │       ├── draft_tab.py
-│   │       ├── polish_tab.py
-│   │       └── export_tab.py
+│   │       ├── themes\_tab.py
+│   │       ├── platforms\_tab.py
+│   │       ├── analyze\_tab.py
+│   │       ├── topics\_tab.py
+│   │       ├── briefs\_tab.py
+│   │       ├── draft\_tab.py
+│   │       ├── polish\_tab.py
+│   │       └── export\_tab.py
 │   │
-│   ├── data_collection/             # Central scraping logic
-│   │   └── collect_data.py
+│   ├── analyzers/
+│   │   ├── trend\_sentiment\_analyzer.py
+│   │   └── trend\_viz.py
 │   │
-│   ├── database/                    # DB interactions (currently empty)
-│   │   └── db_manager.py (planned)
+│   ├── agents/
+│   │   ├── topic\_generator.py
+│   │   ├── brief\_writer.py
+│   │   ├── content\_drafter.py
+│   │   └── content\_polisher.py
 │   │
-│   ├── scrapers/                    # Source-specific scrapers
-│   │   ├── google_search_scraper.py
-│   │   ├── reddit_scraper.py
-│   │   ├── hackernews_scraper.py
-│   │   ├── news_scraper.py
-│   │   ├── rss_scraper.py
-│   │   └── youtube_scraper.py
+│   ├── scrapers/
+│   │   ├── reddit\_scraper.py
+│   │   ├── google\_search\_scraper.py
+│   │   ├── youtube\_scraper.py
+│   │   ├── hackernews\_scraper.py
+│   │   ├── news\_scraper.py
+│   │   └── rss\_scraper.py
 │   │
-│   └── utils/                       # Helper functions (currently empty)
-│       ├── text_cleaning.py (planned)
-│       └── exporter.py (planned)
+│   ├── data\_collection/
+│   │   └── collect\_data.py
+│   │
+│   ├── database/          # Currently empty - future DB helpers
+│   └── utils/             # Currently empty - future utility functions
 │
-├── requirements.txt
-├── .env                             # API keys
-└── README.md
+└── requirements.txt
+
 ````
 
 ---
 
-## 🧪 Local Setup
+## ✅ Installation
 
-### 1. Clone
+### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/yourname/content-marketing-agent.git
+git clone https://github.com/yourusername/content-marketing-agent.git
 cd content-marketing-agent
-```
+````
 
-### 2. Create Environment
+### 2. Set up your Python environment
+
+Create a virtual environment:
 
 ```bash
-conda create -n cma python=3.9
-conda activate cma
+python3 -m venv venv
+source venv/bin/activate   # macOS / Linux
+venv\Scripts\activate      # Windows
 ```
 
 ### 3. Install Requirements
@@ -119,82 +171,70 @@ conda activate cma
 pip install -r requirements.txt
 ```
 
-### 4. Configure API Key
+### 4. Configure Environment Variables
 
-Create a `.env` file:
+Create a `.env` file in the root with:
 
-```env
-OPENAI_API_KEY=your-api-key-here
+```
+OPENAI_API_KEY=your_api_key_here
+REDDIT_CLIENT_ID=your_id
+REDDIT_CLIENT_SECRET=your_secret
+REDDIT_USER_AGENT=your_app_name
+YOUTUBE_API_KEY=your_key
+GOOGLE_API_KEY=your_key
+GOOGLE_CSE_ID=your_cse_id
+NEWS_API_KEY=your_key
 ```
 
----
+Refer to:
 
-## 🖥️ UI Tab Flow (Streamlit)
-
-| Step | Tab Name         | Description                            |
-| ---- | ---------------- | -------------------------------------- |
-| 1    | Define Themes    | Enter broad content themes             |
-| 2    | Select Platforms | Choose sources and scrape config       |
-| 3    | Analyze Trends   | Extract keywords, sentiments, clusters |
-| 4    | Generate Topics  | LLM topic suggestions                  |
-| 5    | Write Briefs     | Generate structured briefs per topic   |
-| 6    | Draft Content    | Long-form content from each brief      |
-| 7    | Polish Content   | Refine tone, grammar, flow             |
-| 8    | Export           | Save content as `.docx`, `.md`, email  |
+* `guides/google-api-setup-guide.md`
 
 ---
 
-## 📊 Scrapers Summary
+## ▶️ Running the App
 
-| Platform   | Script                     | Notes                         |
-| ---------- | -------------------------- | ----------------------------- |
-| Google     | `google_search_scraper.py` | SERP-based scraping           |
-| Reddit     | `reddit_scraper.py`        | Needs subreddit + keyword     |
-| HackerNews | `hackernews_scraper.py`    | Top/Best stories              |
-| RSS Feeds  | `rss_scraper.py`           | Simple feedparser integration |
-| YouTube    | `youtube_scraper.py`       | Basic metadata + query search |
-| NewsAPI    | `news_scraper.py`          | Requires NewsAPI key          |
-
----
-
-## 🔧 Known Tech Debt
-
-Refer [`guides/TECH_DEBT.md`](./guides/TECH_DEBT.md) for current limitations, UI inconsistencies, and cleanup priorities.
-
----
-
-## 🧠 Tech Stack
-
-* **Python 3.9**
-* **Streamlit** – UI framework
-* **OpenAI (via LangChain)** – LLM integration
-* **SQLite** – Content persistence
-* **scikit-learn / NLTK / spaCy** – NLP pipeline
-* **Matplotlib / WordCloud / Seaborn** – Visuals
-* **fpdf / python-docx** – Export generation
-
----
-
-## 📈 Example: Run Analysis from Notebook
-
-```python
-from src.analyzers.trend_sentiment_analyzer import analyze_trends_and_sentiment
-
-df, embeddings = analyze_trends_and_sentiment()
-df.head()
+```bash
+streamlit run src/app/ui.py
 ```
 
----
-
-## 🧑 Maintainer
-
-**Vinoth Haldorai**
-[LinkedIn](https://linkedin.com/in/...) • [GitHub](https://github.com/...)
+Your browser will open the Content Marketing Agent UI.
 
 ---
 
-## 📜 License
+## 📦 Requirements
 
-MIT License — free for personal + commercial use.
+See:
+
+* `requirements.txt`
 
 ---
+
+## ⚠️ Technical Debt & Future Improvements
+
+Tracked in:
+
+* `guides/TECH_DEBT.md`
+
+Highlights:
+
+* Add exception handling in scrapers
+* Refactor repeated navigation logic
+* Implement testing
+* Add logging
+
+---
+
+## 💡 Contributing
+
+Contributions are welcome!
+
+* Raise issues
+* Suggest features
+* Improve scrapers for new platforms
+
+---
+
+## License
+
+[MIT License](LICENSE)
