@@ -22,8 +22,9 @@ tiktoken>=0.5
 # Streamlit
 streamlit>=1.25
 
-# PDF Export
-fpdf2>=2.7
+# Document generation
+python-docx>=0.8
+reportlab>=4.0
 
 # Optional - for cluster viz
 plotly>=5.14

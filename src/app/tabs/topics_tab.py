@@ -7,9 +7,9 @@ from pathlib import Path
 
 # Ensure we can import from src/analyzers
 root_dir = Path(__file__).resolve().parents[2]
-sys.path.append(str(root_dir / "src"))
+sys.path.append(str(root_dir))
 
-from agents.topic_generator import generate_topics
+from src.agents.topic_generator import generate_topics
 
 
 def render_topics_tab():

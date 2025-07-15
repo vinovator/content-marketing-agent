@@ -6,9 +6,9 @@ from pathlib import Path
 
 # Add root directory to sys.path
 root_dir = Path(__file__).resolve().parents[2]
-sys.path.append(str(root_dir / "src"))
+sys.path.append(str(root_dir))
 
-from agents.content_drafter import generate_draft
+from src.agents.content_drafter import generate_draft
 
 def render_draft_tab():
     st.header("Step 6: Draft Content")

@@ -6,9 +6,9 @@ from pathlib import Path
 
 # Add src to sys.path
 root_dir = Path(__file__).resolve().parents[2]
-sys.path.append(str(root_dir / "src"))
+sys.path.append(str(root_dir))
 
-from agents.content_polisher import polish_draft
+from src.agents.content_polisher import polish_draft
 
 def render_polish_tab():
     st.header("Step 7: Polish Content")
@@ -65,7 +65,14 @@ def render_polish_tab():
                     polished_outputs.append({
                         "title": draft.get("title", f"Draft {i+1}"),
                         "original": draft.get("draft", ""),
-                        "polished": polished
+                        "polished": polished,
+                        "tone": tone,
+                        "audience": audience,
+                        "brief": {
+                            **draft.get("brief", {}),
+                            "tone": tone,
+                            "audience": audience,
+                        },
                     })
                     st.session_state[f"polished_{i}"] = polished
                     st.success("✅ Draft polished!")
@@ -80,8 +87,8 @@ def render_polish_tab():
         polished = st.session_state.get(f"polished_{i}")
         if polished:
             with st.expander(f"📄 {draft['title']} (Polished)"):
-                st.markdown("**Original Draft:**")
-                st.code(draft["draft"], language="markdown")
+                #st.markdown("**Original Draft:**")
+                #st.code(draft["draft"], language="markdown")
 
                 st.markdown("**✨ Polished Draft:**")
                 st.markdown(polished)
@@ -89,7 +96,14 @@ def render_polish_tab():
                 if st.checkbox("✅ Select this for export", key=f"select_polished_{i}"):
                     final_selection.append({
                         "title": draft.get("title"),
-                        "polished": polished
+                        "polished": polished,
+                        "tone": tone,
+                        "audience": audience,
+                        "brief": {
+                            **draft.get("brief", {}),
+                            "tone": tone,
+                            "audience": audience,
+                        },
                     })
 
     # Save final export list

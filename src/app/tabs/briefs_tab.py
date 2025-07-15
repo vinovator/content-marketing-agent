@@ -6,9 +6,9 @@ from pathlib import Path
 
 # Ensure we can import from src/agents
 root_dir = Path(__file__).resolve().parents[2]
-sys.path.append(str(root_dir / "src"))
+sys.path.append(str(root_dir))
 
-from agents.brief_writer import generate_brief
+from src.agents.brief_writer import generate_brief
 
 def render_briefs_tab():
     st.header("Step 5: Write Briefs")

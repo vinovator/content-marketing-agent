@@ -6,11 +6,11 @@ from pathlib import Path
 
 # Ensure we can import from src/analyzers
 root_dir = Path(__file__).resolve().parents[2]
-sys.path.append(str(root_dir / "src"))
+sys.path.append(str(root_dir))
 
-from analyzers.trend_sentiment_analyzer import analyze_trends_and_sentiment
-from analyzers.trend_viz import plot_sentiment_distribution, plot_top_keywords, plot_wordcloud, plot_clusters
-from data_collection.collect_data import collect_data
+from src.analyzers.trend_sentiment_analyzer import analyze_trends_and_sentiment
+from src.analyzers.trend_viz import plot_sentiment_distribution, plot_top_keywords, plot_wordcloud, plot_clusters
+from src.data_collection.collect_data import collect_data
 
 import matplotlib.pyplot as plt
 import seaborn as sns
