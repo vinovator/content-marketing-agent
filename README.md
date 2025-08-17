@@ -13,6 +13,15 @@
 
 ---
 
+## 🚀 Live Demo
+
+Our Streamlit app is now live!  
+Try out **Content Marketing Agent** in action here:  
+
+👉 [content-marketing-agent.streamlit.app](https://content-marketing-agent.streamlit.app/)
+
+---
+
 ## 📚 Project Overview
 
 The Content Marketing Agent scrapes trending content from various platforms, analyzes it for topics and sentiment, and uses AI agents to:
