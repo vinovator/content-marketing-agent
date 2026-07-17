@@ -16,7 +16,7 @@ The app serves on port 8501. NLTK corpora (`punkt`, `stopwords`, `vader_lexicon`
 
 ## Configuration
 
-Copy `env-example.txt` to `.env` and fill in keys. `OPENAI_API_KEY` is required for all AI agents (Steps 4–7). Scraper keys (`REDDIT_CLIENT_ID/SECRET/USER_AGENT`, `YOUTUBE_API_KEY`, `GOOGLE_API_KEY`, `GOOGLE_CSE_ID`, `NEWS_API_KEY`) are each only needed for their platform. See `guides/google-api-setup-guide.md` for Google/YouTube setup.
+Copy `.env.example` to `.env` and fill in keys. `OPENAI_API_KEY` is required for all AI agents (Steps 4–7). Scraper keys (`REDDIT_CLIENT_ID/SECRET/USER_AGENT`, `YOUTUBE_API_KEY`, `GOOGLE_API_KEY`, `GOOGLE_CSE_ID`, `NEWS_API_KEY`) are each only needed for their platform. See `guides/google-api-setup-guide.md` for Google/YouTube setup.
 
 ## Architecture
 
