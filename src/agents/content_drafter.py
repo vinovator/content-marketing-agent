@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 
 load_dotenv()
@@ -40,6 +40,6 @@ def generate_draft(brief: dict, model_name="gpt-4o-mini"):
         temperature=0.7
     )
 
-    chain = LLMChain(prompt=prompt_template, llm=llm)
+    chain = prompt_template | llm | StrOutputParser()
 
-    return chain.run(brief).strip()
+    return chain.invoke(brief).strip()

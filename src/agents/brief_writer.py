@@ -1,8 +1,8 @@
 # src/agents/brief_writer.py
 
 from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 import os
 from dotenv import load_dotenv
 import json
@@ -41,11 +41,10 @@ def generate_brief(title: str, description: str, model_name="gpt-4o-mini"):
         temperature=0.7
     )
 
-    chain = LLMChain(llm=llm, prompt=prompt_template)
-    #print("DEBUG: Calling chain.run...")
+    chain = prompt_template | llm | StrOutputParser()
+    #print("DEBUG: Calling chain.invoke...")
 
-    raw_response = chain.run(title=title, description=description)
-    #raw_response = chain.invoke({"title": title, "description": description})
+    raw_response = chain.invoke({"title": title, "description": description})
 
     #print("DEBUG: Raw response received:", raw_response)
 

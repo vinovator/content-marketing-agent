@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 import os
 from dotenv import load_dotenv
 
@@ -37,7 +37,7 @@ def polish_draft(draft: str, tone: str = "Professional", audience: str = "Busine
         temperature=0.5  # Slightly lower for polish (less creative, more precise)
     )
 
-    chain = LLMChain(llm=llm, prompt=prompt_template)
+    chain = prompt_template | llm | StrOutputParser()
 
-    polished = chain.run(draft=draft, tone=tone, audience=audience)
+    polished = chain.invoke({"draft": draft, "tone": tone, "audience": audience})
     return polished

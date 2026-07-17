@@ -1,7 +1,7 @@
 import json
 from langchain_openai import ChatOpenAI # Wrapper for OpenAI's chat models
-from langchain.prompts import PromptTemplate # Reusable template for prompt formatting
-from langchain.chains import LLMChain # Combines LLMs with prompts to create a chain of operations
+from langchain_core.prompts import PromptTemplate # Reusable template for prompt formatting
+from langchain_core.output_parsers import StrOutputParser # Extracts the string content from the LLM response
 import os
 from dotenv import load_dotenv
 
@@ -55,12 +55,12 @@ def generate_topics(keywords: list, model_name = "gpt-4o-mini"):
                      model=model_name, 
                      temperature=0.7) # Controls randomness. 0 = deterministic, 1 = creative. 0.7 gives moderately creative results.
     
-    chain = LLMChain(llm=llm, prompt=prompt_template)
+    chain = prompt_template | llm | StrOutputParser()
 
     keywords_str = ", ".join(keywords)
 
-    #print("DEBUG: Calling chain.run with keywords:", keywords_str)
-    raw_response = chain.run(keywords=keywords_str)
+    #print("DEBUG: Calling chain.invoke with keywords:", keywords_str)
+    raw_response = chain.invoke({"keywords": keywords_str})
     #print("DEBUG: Raw response:", raw_response)
 
     # Parse the JSON response
