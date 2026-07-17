@@ -22,6 +22,7 @@ from sentence_transformers import SentenceTransformer
 
 # --- Setup ---
 nltk.download("punkt", quiet=True)
+nltk.download("punkt_tab", quiet=True)  # required by word_tokenize on NLTK >= 3.9
 nltk.download("stopwords", quiet=True)
 nltk.download("vader_lexicon", quiet=True)
 
