@@ -182,7 +182,13 @@ pip install -r requirements.txt
 
 ### 4. Configure Environment Variables
 
-Create a `.env` file in the root with:
+Copy the provided template to a `.env` file in the root, then fill in your keys:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and set your values for:
 
 ```
 OPENAI_API_KEY=your_api_key_here
